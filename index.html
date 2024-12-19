@@ -3,19 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>GitHub Pages Example</title>
+    <style>
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .active-tab {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        .content {
+            display: none;
+        }
+        .active-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Flask App</h1>
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="about.html">About</a>
-        </nav>
-    </header>
-    <main>
-        <p>This is the home page.</p>
-    </main>
+    <div>
+        <div class="tab" onclick="switchTab(0)">Tab 1</div>
+        <div class="tab" onclick="switchTab(1)">Tab 2</div>
+        <div class="tab" onclick="switchTab(2)">Tab 3</div>
+    </div>
+
+    <div class="content active-content" id="content1">
+        <h2>Content 1</h2>
+        <textarea id="grammarInput" placeholder="Enter text to check grammar..."></textarea>
+        <button onclick="checkGrammar()">Check Grammar</button>
+        <div id="grammarOutput"></div>
+    </div>
+
+    <div class="content" id="content2">
+        <h2>Content 2</h2>
+        <textarea id="translationInput" placeholder="Enter text to translate..."></textarea>
+        <input id="languageInput" placeholder="Enter target language...">
+        <button onclick="checkTranslation()">Translate</button>
+        <div id="translationOutput"></div>
+    </div>
+
+    <div class="content" id="content3">
+        <h2>Content 3</h2>
+        <textarea id="imageInput" placeholder="Enter prompt for image..."></textarea>
+        <button onclick="generateImage()">Generate Image</button>
+        <div id="imageOutput"></div>
+    </div>
+
+    <div class="loading">Loading...</div>
+
+    <script>
+        let activeTab = 0;
+
+        function switchTab(tabIndex) {
+            document.querySelectorAll(".tab").forEach((tab, index) => {
+                tab.classList.toggle("active-tab", index === tabIndex);
+            });
+            document.querySelectorAll(".content").forEach((content, index) => {
+                content.classList.toggle("active-content", index === tabIndex);
+            });
+        }
+
+        function showLoading() {
+            document.querySelector(".loading").style.display = "block";
+        }
+
+        function hideLoading() {
+            document.querySelector(".loading").style.display = "none";
+        }
+
+        function checkGrammar() {
+            showLoading();
+            setTimeout(() => {
+                const inputText = document.getElementById("grammarInput").value;
+                document.getElementById("grammarOutput").innerText = `Simulated corrected text for: ${inputText}`;
+                hideLoading();
+            }, 1000); // Simulate network delay
+        }
+
+        function checkTranslation() {
+            showLoading();
+            setTimeout(() => {
+                const inputText = document.getElementById("translationInput").value;
+                const language = document.getElementById("languageInput").value;
+                document.getElementById("translationOutput").innerText = `Simulated translation to ${language}: ${inputText}`;
+                hideLoading();
+            }, 1000); // Simulate network delay
+        }
+
+        function generateImage() {
+            showLoading();
+            setTimeout(() => {
+                const prompt = document.getElementById("imageInput").value;
+                document.getElementById("imageOutput").innerHTML = `<img src="https://via.placeholder.com/150?text=${encodeURIComponent(prompt)}" alt="Generated Image">`;
+                hideLoading();
+            }, 1000); // Simulate network delay
+        }
+    </script>
 </body>
 </html>
